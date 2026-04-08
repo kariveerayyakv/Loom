@@ -20,7 +20,7 @@ async function doUserLogin() {
   btn.disabled = true;
 
   try {
-    const res = await fetch('http://localhost:5000/api/user/login', {
+    const res = await fetch('https://loom-grievance.onrender.com/api/user/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId })
@@ -64,7 +64,7 @@ async function doAdminLogin() {
   btn.disabled = true;
 
   try {
-    const res = await fetch('http://localhost:5000/api/admin/login', {
+    const res = await fetch('https://loom-grievance.onrender.com/api/admin/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username: user, password: pass })
