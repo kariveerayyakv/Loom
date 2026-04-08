@@ -1,8 +1,6 @@
 /* LOOM — API Layer */
 
-const API = window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost' || window.location.protocol === 'file:'
-  ? 'http://localhost:5000/api'
-  : 'https://loom-eyfc.onrender.com/api';   // ← replace with your actual Render URL after deploy
+const API = 'https://loom-grievance.onrender.com/api';  // ← replace with your actual Render URL after deploy
 
 /* ── Generic fetch wrapper ───────────────────────────────── */
 function getActiveUserId() {
