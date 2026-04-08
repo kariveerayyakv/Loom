@@ -60,7 +60,8 @@ PRIORITY_MEDIUM = 5
 ADMIN_CREDENTIALS = {
     'admin':     'admin123',
     'principal': 'principal@mgm',
-    'hod':       'hod@mgm2024'
+    'hod':       'hod@mgm2024',
+    'sanjana':   'sanjana@mgme'
 }
 
 VALID_STUDENT_IDS = [
