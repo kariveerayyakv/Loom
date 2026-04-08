@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: loom-grievance
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        value: 3306
+      - key: DB_NAME
+        value: loom_db
+      - key: SECRET_KEY
+        generateValue: true

@@ -1,0 +1,133 @@
+/* LOOM — Student Portal Styles */
+
+/* Stats bar */
+.stats-wrapper {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  z-index: 1;
+}
+
+.stats-bar {
+  display: flex;
+  gap: 1px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.stat-item {
+  flex: 1;
+  background: var(--surface);
+  padding: 16px 18px;
+  text-align: center;
+}
+
+.stat-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.stat-label {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+/* Two-column layout */
+.main-layout {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 24px;
+  padding-top: 28px;
+  padding-bottom: 40px;
+  align-items: start;
+}
+
+.left-col {
+  position: sticky;
+  top: 80px;
+}
+
+.right-col {
+  min-width: 0;
+}
+
+/* Complaint form */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+/* My submissions mini list */
+.my-complaint-mini {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: border-color 0.16s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.my-complaint-mini:hover {
+  border-color: rgba(124, 109, 250, 0.3);
+}
+
+.my-complaint-mini .mc-title {
+  font-weight: 500;
+  color: var(--text);
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.my-complaint-mini .mc-votes {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+/* Detail modal */
+.detail-modal {
+  max-width: 560px;
+}
+
+@media (max-width: 900px) {
+  .main-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .left-col {
+    position: static;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .stats-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}

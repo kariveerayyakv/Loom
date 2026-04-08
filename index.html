@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LOOM — Anonymous Student Grievance System</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+  <div class="blob blob3"></div>
+
+  <nav>
+    <div class="nav-inner">
+      <div class="logo">LOOM<span>Grievance System</span></div>
+    </div>
+  </nav>
+
+  <div class="hero-section">
+    <div class="wrapper">
+      <div class="hero-badge">🔒 Fully Anonymous · AI Moderated · MGM Evening College Udupi</div>
+      <h1>Your Voice.<br><em>Without Fear.</em></h1>
+      <p>LOOM is a secure, anonymous platform for students to lodge complaints, vote on issues, and hold the institution
+        accountable — all without revealing your identity.</p>
+
+      <div class="panel-chooser">
+        <div class="panel-card" onclick="showUserLogin()">
+          <div class="panel-icon">🎓</div>
+          <div class="panel-title">Student Portal</div>
+          <div class="panel-desc">Submit complaints & vote with your Student ID.</div>
+          <div class="panel-btn">Student Login →</div>
+        </div>
+        <div class="panel-divider">or</div>
+        <div class="panel-card admin-card" onclick="showAdminLogin()">
+          <div class="panel-icon">🔐</div>
+          <div class="panel-title">Admin Portal</div>
+          <div class="panel-desc">College management login to review and resolve complaints.</div>
+          <div class="panel-btn">Admin Login →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="features-section">
+    <div class="wrapper">
+      <div class="features-grid">
+        <div class="feature-item">
+          <div class="feature-icon">👤</div>
+          <div class="feature-title">100% Anonymous</div>
+          <div class="feature-desc">No email, no phone, no identity. A random ID is assigned to each submission.</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🗳️</div>
+          <div class="feature-title">Crowd Voting</div>
+          <div class="feature-desc">Upvote issues that matter to you. High-vote complaints are auto-escalated to
+            Critical.</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🛡️</div>
+          <div class="feature-title">AI Moderation</div>
+          <div class="feature-desc">Built-in content filter removes profanity, spam and low-quality submissions.</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">⚡</div>
+          <div class="feature-title">Auto Escalation</div>
+          <div class="feature-desc">When a complaint crosses the vote threshold it is automatically flagged Critical.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Student Login Modal -->
+  <div class="modal-overlay" id="userLoginModal">
+    <div class="modal login-modal">
+      <div class="modal-header">
+        <div>
+          <div style="font-size:28px;margin-bottom:6px">🎓</div>
+          <div class="modal-title">Student Login</div>
+          <div style="font-size:13px;color:var(--muted);margin-top:4px">Enter your 8-character Student ID</div>
+        </div>
+        <button class="modal-close" onclick="hideUserLogin()">✕</button>
+      </div>
+      <div class="form-group" style="margin-bottom:20px">
+        <label>Student ID</label>
+        <input type="text" id="studentId" placeholder="e.g. A1B2C3D4" autocomplete="off"
+          onkeydown="if(event.key==='Enter')doUserLogin()">
+      </div>
+      <div id="userLoginError" class="login-error" style="display:none"></div>
+      <button class="btn btn-primary" style="width:100%" id="userLoginBtn" onclick="doUserLogin()">Login to
+        Portal</button>
+    </div>
+  </div>
+
+  <!-- Admin Login Modal -->
+  <div class="modal-overlay" id="adminLoginModal">
+    <div class="modal login-modal">
+      <div class="modal-header">
+        <div>
+          <div style="font-size:28px;margin-bottom:6px">🔐</div>
+          <div class="modal-title">Admin Login</div>
+          <div style="font-size:13px;color:var(--muted);margin-top:4px">MGM Evening College Management Portal</div>
+        </div>
+        <button class="modal-close" onclick="hideAdminLogin()">✕</button>
+      </div>
+      <div class="form-group" style="margin-bottom:16px">
+        <label>Username</label>
+        <input type="text" id="adminUser" placeholder="Enter admin username" autocomplete="off">
+      </div>
+      <div class="form-group" style="margin-bottom:20px">
+        <label>Password</label>
+        <input type="password" id="adminPass" placeholder="Enter password"
+          onkeydown="if(event.key==='Enter')doAdminLogin()">
+      </div>
+      <div id="loginError" class="login-error" style="display:none"></div>
+      <button class="btn btn-primary" style="width:100%" id="loginBtn" onclick="doAdminLogin()">Login to Admin
+        Panel</button>
+      <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:14px"></div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="api.js"></script>
+  <script src="auth.js"></script>
+</body>
+
+</html>

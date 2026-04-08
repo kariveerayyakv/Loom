@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LOOM — Student Portal</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="user.css">
+</head>
+
+<body>
+
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+  <div class="blob blob3"></div>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="logo">LOOM<span>Student Portal</span></a>
+      <div class="nav-right">
+        <span id="studentIdDisplay" class="muted-text" style="margin-right: 12px; font-size: 13px;"></span>
+        <button class="btn btn-ghost btn-sm" style="margin-right: 8px;" onclick="userLogout()">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="stats-wrapper">
+    <div class="wrapper">
+      <div class="stats-bar">
+        <div class="stat-item">
+          <div class="stat-num" id="statTotal">—</div>
+          <div class="stat-label">Total Reports</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" id="statCritical" style="color:var(--critical)">—</div>
+          <div class="stat-label">Critical</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" id="statResolved" style="color:var(--accent3)">—</div>
+          <div class="stat-label">Resolved</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="wrapper main-layout">
+
+    <!-- Left: Submit Form + My Submissions -->
+    <div class="left-col">
+      <div class="card">
+        <div class="section-header">
+          <div class="section-title">New Complaint</div>
+          <button class="btn btn-ghost btn-sm" onclick="toggleForm()">
+            <span id="formToggleText">▲ Hide</span>
+          </button>
+        </div>
+        <div id="complaintForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Category</label>
+              <select id="category">
+                <option value="">Select...</option>
+                <option>Infrastructure</option>
+                <option>Academic</option>
+                <option>Hostel</option>
+                <option>Administration</option>
+                <option>Safety</option>
+                <option>Canteen</option>
+                <option>Library</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Priority</label>
+              <select id="priority">
+                <option value="low">Low</option>
+                <option value="medium" selected>Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label>Complaint Title</label>
+              <input type="text" id="complaintTitle" placeholder="Brief, clear title..." maxlength="100">
+            </div>
+            <div class="form-group full">
+              <label>Description <span class="char-count" id="charCount">0/500</span></label>
+              <textarea id="description" rows="5"
+                placeholder="Describe your issue in detail. Be specific about location, time, and impact..."
+                maxlength="500"></textarea>
+            </div>
+          </div>
+          <div class="ai-shield" id="aiShield">
+            <span class="shield-icon">🛡️</span>
+            <span id="aiShieldText">AI moderation active — content will be filtered for quality.</span>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-ghost" onclick="clearForm()">Clear</button>
+            <button class="btn btn-primary" id="submitBtn" onclick="submitComplaint()">Submit Anonymously</button>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+    <!-- Right: Live Feed -->
+    <div class="right-col">
+      <div class="section-header">
+        <div class="section-title">Live Feed</div>
+        <span class="muted-text" id="feedCount">Loading...</span>
+      </div>
+      <div class="filters" id="feedFilters">
+        <div class="filter-pill active" onclick="filterFeed('all', this)">All</div>
+        <div class="filter-pill" onclick="filterFeed('critical', this)">🔴 Critical</div>
+        <div class="filter-pill" onclick="filterFeed('in-review', this)">🟡 In Review</div>
+        <div class="filter-pill" onclick="filterFeed('pending', this)">⚪ Pending</div>
+        <div class="filter-pill" onclick="filterFeed('resolved', this)">🟢 Resolved</div>
+      </div>
+      <div id="complaintFeed"></div>
+    </div>
+  </div>
+
+  <!-- Detail Modal -->
+  <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+    <div class="modal detail-modal">
+      <div class="modal-header">
+        <div style="flex:1">
+          <div id="modalMeta" style="margin-bottom:10px"></div>
+          <div id="modalTitle" class="modal-title"></div>
+        </div>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div id="modalBody" class="modal-body-text"></div>
+      <div id="modalFooter" class="modal-footer-row"></div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="api.js"></script>
+  <script src="auth.js"></script>
+  <script src="moderation.js"></script>
+  <script src="user.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,93 @@
+/* LOOM — Admin Panel Styles */
+
+/* Sidebar + main two-column */
+.admin-wrapper {
+  display: grid; grid-template-columns: 220px 1fr;
+  min-height: calc(100vh - 62px); position: relative; z-index: 1;
+}
+
+/* Sticky sidebar */
+.sidebar {
+  background: var(--surface); border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; justify-content: space-between;
+  position: sticky; top: 62px;
+  height: calc(100vh - 62px); overflow-y: auto;
+}
+.sidebar-menu { padding: 20px 12px; display: flex; flex-direction: column; gap: 3px; }
+
+.sidebar-item {
+  display: flex; align-items: center; gap: 10px; padding: 10px 14px;
+  border-radius: var(--radius-sm); cursor: pointer;
+  font-size: 13px; font-weight: 500; color: var(--muted); transition: all 0.16s;
+}
+.sidebar-item:hover  { background: var(--surface2); color: var(--text); }
+.sidebar-item.active { background: rgba(124,109,250,0.14); color: var(--accent); }
+.si-icon { font-size: 15px; }
+
+/* Count badge on sidebar items */
+.sidebar-badge {
+  margin-left: auto; background: var(--critical); color: #fff;
+  font-size: 10px; font-weight: 700; padding: 2px 7px;
+  border-radius: 10px; min-width: 20px; text-align: center; display: none;
+}
+.sidebar-badge.show { display: block; }
+
+.sidebar-footer { padding: 16px; border-top: 1px solid var(--border); }
+.sidebar-info { background: var(--surface2); border-radius: var(--radius-sm); padding: 14px; }
+
+/* Main content */
+.admin-main  { padding: 28px; overflow-y: auto; }
+.page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+
+/* Tab system */
+.tab-content { display: none; }
+.tab-content.active { display: block; animation: fadeUp 0.3s ease both; }
+
+/* Dashboard metric cards */
+.metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 28px; }
+.metric-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 20px; transition: border-color 0.16s;
+}
+.metric-card:hover        { border-color: rgba(124,109,250,0.25); }
+.metric-card.critical-card { border-color: rgba(250,74,74,0.28); }
+.metric-num   { font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 800; line-height: 1; margin-bottom: 6px; }
+.metric-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+
+/* Dashboard grid */
+.dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+/* Quick action buttons on complaint cards */
+.card-actions { display: flex; flex-direction: column; gap: 6px; }
+.admin-action-btn {
+  padding: 7px 12px; border-radius: 6px; font-size: 11px; font-weight: 600;
+  cursor: pointer; border: 1px solid var(--border); background: var(--surface2);
+  color: var(--muted); font-family: 'DM Sans', sans-serif;
+  transition: all 0.16s; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.admin-action-btn:hover     { border-color: var(--accent); color: var(--accent); }
+.admin-action-btn.btn-review   { border-color: rgba(250,189,74,0.3);  color: var(--warning);  }
+.admin-action-btn.btn-resolve  { border-color: rgba(109,250,189,0.3); color: var(--accent3);  }
+.admin-action-btn.btn-critical { border-color: rgba(250,74,74,0.3);   color: var(--critical); }
+
+/* Admin modal action bar */
+.admin-actions-bar {
+  margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--border);
+  display: flex; gap: 8px; flex-wrap: wrap;
+}
+.admin-detail-modal { max-width: 600px; }
+
+/* Search input */
+#searchInput { width: 200px; padding: 8px 12px; font-size: 13px; }
+
+@media (max-width: 1100px) {
+  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .dash-grid    { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .admin-wrapper { grid-template-columns: 1fr; }
+  .sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border); }
+  .sidebar-menu { flex-direction: row; overflow-x: auto; padding: 10px; }
+  .sidebar-footer { display: none; }
+  .admin-main { padding: 16px; }
+}

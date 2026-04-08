@@ -1,0 +1,209 @@
+/* LOOM — Landing Page Styles */
+
+.hero-section {
+  padding: 80px 0 60px;
+  text-align: center;
+  animation: fadeUp 0.6s ease both;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(124, 109, 250, 0.1);
+  border: 1px solid rgba(124, 109, 250, 0.28);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 12px;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 22px;
+  letter-spacing: 0.4px;
+}
+
+.hero-section h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(40px, 7vw, 72px);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -2.5px;
+  margin-bottom: 18px;
+}
+
+/* Gradient text — vendor + standard prefix both required */
+.hero-section h1 em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-section p {
+  color: var(--muted);
+  font-size: 16px;
+  max-width: 540px;
+  margin: 0 auto 48px;
+  line-height: 1.75;
+  font-weight: 300;
+}
+
+/* Panel chooser */
+.panel-chooser {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  animation: fadeUp 0.6s 0.1s ease both;
+}
+
+.panel-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px 28px;
+  width: 260px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.22s;
+  position: relative;
+  overflow: hidden;
+}
+
+.panel-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(124, 109, 250, 0.06), transparent);
+  opacity: 0;
+  transition: opacity 0.22s;
+}
+
+.panel-card:hover {
+  border-color: rgba(124, 109, 250, 0.5);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+}
+
+.panel-card:hover::before {
+  opacity: 1;
+}
+
+.admin-card:hover {
+  border-color: rgba(250, 109, 154, 0.5);
+}
+
+.admin-card::before {
+  background: linear-gradient(135deg, rgba(250, 109, 154, 0.06), transparent);
+}
+
+.panel-icon {
+  font-size: 36px;
+  margin-bottom: 12px;
+}
+
+.panel-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: -0.3px;
+}
+
+.panel-desc {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 18px;
+}
+
+.panel-btn {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.2px;
+}
+
+.admin-card .panel-btn {
+  color: var(--accent2);
+}
+
+.panel-divider {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+/* Features */
+.features-section {
+  padding: 60px 0 80px;
+  position: relative;
+  z-index: 1;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  animation: fadeUp 0.6s 0.2s ease both;
+}
+
+.feature-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 20px;
+  transition: border-color 0.18s;
+}
+
+.feature-item:hover {
+  border-color: rgba(124, 109, 250, 0.28);
+}
+
+.feature-icon {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.feature-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 7px;
+}
+
+.feature-desc {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+/* Login modal */
+.login-modal {
+  max-width: 400px;
+}
+
+@media (max-width: 900px) {
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .panel-chooser {
+    flex-direction: column;
+  }
+
+  .panel-card {
+    width: 100%;
+    max-width: 320px;
+  }
+}

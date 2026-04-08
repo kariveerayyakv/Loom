@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LOOM — Admin Panel</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="logo">LOOM<span>Admin Panel</span></a>
+      <div class="nav-right">
+        <div class="admin-badge">🔐 <span id="adminNameDisplay">Admin</span></div>
+        <button class="btn btn-ghost btn-sm" onclick="adminLogout()">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="admin-wrapper">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-menu">
+        <div class="sidebar-item active" onclick="switchTab('dashboard',this)"><span class="si-icon">📊</span> Dashboard
+        </div>
+        <div class="sidebar-item" onclick="switchTab('all',this)"><span class="si-icon">📋</span> All Complaints</div>
+        <div class="sidebar-item" onclick="switchTab('critical',this)">
+          <span class="si-icon">🔴</span> Critical
+          <span class="sidebar-badge" id="badgeCritical">0</span>
+        </div>
+        <div class="sidebar-item" onclick="switchTab('in-review',this)">
+          <span class="si-icon">🟡</span> In Review
+          <span class="sidebar-badge" id="badgeReview">0</span>
+        </div>
+        <div class="sidebar-item" onclick="switchTab('pending',this)">
+          <span class="si-icon">⚪</span> Pending
+          <span class="sidebar-badge" id="badgePending">0</span>
+        </div>
+        <div class="sidebar-item" onclick="switchTab('resolved',this)"><span class="si-icon">🟢</span> Resolved</div>
+      </div>
+      <!--<div class="sidebar-footer">
+      <div class="sidebar-info">
+        <div style="font-size:11px;color:var(--muted);margin-bottom:4px">VOTE THRESHOLD</div>
+        <div style="font-size:18px;font-family:'Syne',sans-serif;font-weight:700">5 votes</div>
+        <div style="font-size:11px;color:var(--muted)">auto-escalates to Critical</div>
+      </div>
+    </div>-->
+    </aside>
+
+    <!-- Main -->
+    <main class="admin-main">
+
+      <!-- Dashboard Tab -->
+      <div class="tab-content active" id="tab-dashboard">
+        <div class="page-header">
+          <h2 class="page-title">Dashboard</h2>
+          <span class="muted-text" id="lastRefresh">—</span>
+        </div>
+        <div class="metrics-grid" id="adminMetrics">
+          <div class="metric-card" style="grid-column:1/-1;text-align:center;color:var(--muted)">Loading...</div>
+        </div>
+        <div class="dash-grid">
+          <div>
+            <div class="section-header">
+              <div class="section-title">⚡ Critical Issues</div>
+            </div>
+            <div id="dashCritical"></div>
+          </div>
+          <div>
+            <div class="section-header">
+              <div class="section-title">🕐 Recent Activity</div>
+            </div>
+            <div id="dashRecent"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Complaints Tab -->
+      <div class="tab-content" id="tab-complaints">
+        <div class="page-header">
+          <h2 class="page-title" id="tabTitle">All Complaints</h2>
+          <div style="display:flex;gap:8px;align-items:center">
+            <input type="text" id="searchInput" placeholder="Search complaints..."
+              oninput="searchComplaints(this.value)">
+            <span class="muted-text" id="adminFeedCount">—</span>
+          </div>
+        </div>
+        <div id="adminFeed"></div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Detail Modal -->
+  <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+    <div class="modal admin-detail-modal">
+      <div class="modal-header">
+        <div style="flex:1">
+          <div id="modalMeta" style="margin-bottom:10px"></div>
+          <div id="modalTitle" class="modal-title"></div>
+        </div>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div id="modalBody" class="modal-body-text"></div>
+      <div id="modalFooter" class="modal-footer-row"></div>
+      <div id="adminActions" class="admin-actions-bar"></div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="api.js"></script>
+  <script src="auth.js"></script>
+  <script src="admin.js"></script>
+</body>
+
+</html>
