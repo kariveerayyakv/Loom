@@ -1,13 +1,13 @@
-/* LOOM — Auth module (simplified, sessionStorage only) */
+/* LOOM — Auth module */
 
 const ADMIN_SESSION_KEY = 'loom_admin_session';
-const USER_SESSION_KEY = 'loom_user_session';
+const USER_SESSION_KEY  = 'loom_user_session';
 
-/* ── Login ───────────────────────────────────────── */
+/* ── Student Login ───────────────────────────────── */
 async function doUserLogin() {
   const userId = document.getElementById('studentId').value.trim();
-  const errEl = document.getElementById('userLoginError');
-  const btn = document.getElementById('userLoginBtn');
+  const errEl  = document.getElementById('userLoginError');
+  const btn    = document.getElementById('userLoginBtn');
 
   errEl.style.display = 'none';
 
@@ -17,13 +17,13 @@ async function doUserLogin() {
   }
 
   btn.innerHTML = '<span class="spinner"></span> Verifying...';
-  btn.disabled = true;
+  btn.disabled  = true;
 
   try {
-    const res = await fetch('https://loom-grievance.onrender.com/api/user/login', {
-      method: 'POST',
+    const res  = await fetch(API + '/user/login', {
+      method:  'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId })
+      body:    JSON.stringify({ userId })
     });
     const data = await res.json();
 
@@ -32,13 +32,13 @@ async function doUserLogin() {
       window.location.href = 'user.html';
     } else {
       btn.innerHTML = 'Login to Portal';
-      btn.disabled = false;
+      btn.disabled  = false;
       showUserLoginError(data.error || 'Invalid Student ID.');
     }
   } catch (err) {
     btn.innerHTML = 'Login to Portal';
-    btn.disabled = false;
-    showUserLoginError('Cannot reach server.');
+    btn.disabled  = false;
+    showUserLoginError('Cannot reach server. Try again.');
   }
 }
 
@@ -47,11 +47,12 @@ function showUserLoginError(msg) {
   if (el) { el.textContent = msg; el.style.display = 'block'; }
 }
 
+/* ── Admin Login ─────────────────────────────────── */
 async function doAdminLogin() {
-  const user = document.getElementById('adminUser').value.trim();
-  const pass = document.getElementById('adminPass').value;
+  const user  = document.getElementById('adminUser').value.trim();
+  const pass  = document.getElementById('adminPass').value;
   const errEl = document.getElementById('loginError');
-  const btn = document.getElementById('loginBtn');
+  const btn   = document.getElementById('loginBtn');
 
   errEl.style.display = 'none';
 
@@ -61,31 +62,28 @@ async function doAdminLogin() {
   }
 
   btn.innerHTML = '<span class="spinner"></span> Verifying...';
-  btn.disabled = true;
+  btn.disabled  = true;
 
   try {
-    const res = await fetch('https://loom-grievance.onrender.com/api/admin/login', {
-      method: 'POST',
+    const res  = await fetch(API + '/admin/login', {
+      method:  'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username: user, password: pass })
+      body:    JSON.stringify({ username: user, password: pass })
     });
     const data = await res.json();
 
     if (res.ok && data.success) {
-      // Save to sessionStorage BEFORE redirecting
-      sessionStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify({
-        username: data.username
-      }));
+      sessionStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify({ username: data.username }));
       window.location.href = 'admin.html';
     } else {
       btn.innerHTML = 'Login to Admin Panel';
-      btn.disabled = false;
+      btn.disabled  = false;
       showLoginError(data.error || 'Invalid username or password.');
     }
   } catch (err) {
     btn.innerHTML = 'Login to Admin Panel';
-    btn.disabled = false;
-    showLoginError('Cannot reach server. Make sure Flask is running on port 5000.');
+    btn.disabled  = false;
+    showLoginError('Cannot reach server. Try again.');
   }
 }
 
@@ -119,7 +117,6 @@ function getAdminSession() {
   return raw ? JSON.parse(raw) : null;
 }
 
-/* Purely local check — no server call, no cookie, no CORS issue */
 function requireAdminAuth() {
   const session = getAdminSession();
   if (!session) {
@@ -134,21 +131,18 @@ function adminLogout() {
   window.location.href = 'index.html';
 }
 
-/* ── Modal helpers (index.html) ──────────────────── */
+/* ── Modal helpers ───────────────────────────────── */
 function showUserLogin() {
   document.getElementById('userLoginModal').classList.add('open');
   setTimeout(() => document.getElementById('studentId').focus(), 100);
 }
-
 function hideUserLogin() {
   document.getElementById('userLoginModal').classList.remove('open');
 }
-
 function showAdminLogin() {
   document.getElementById('adminLoginModal').classList.add('open');
   setTimeout(() => document.getElementById('adminUser').focus(), 100);
 }
-
 function hideAdminLogin() {
   document.getElementById('adminLoginModal').classList.remove('open');
 }
