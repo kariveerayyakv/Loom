@@ -30,9 +30,14 @@ app.config['SQLALCHEMY_DATABASE_URI'] = (
     f"{os.getenv('DB_NAME', 'loom_db')}"
 )
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Aiven MySQL requires SSL — this is the only change from the previous version
 app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
     'pool_pre_ping': True,
     'pool_recycle':  300,
+    'connect_args': {
+        'ssl_disabled': False   # SSL must be ON for Aiven
+    }
 }
 
 db.init_app(app)
@@ -115,9 +120,9 @@ def complaint_to_dict(c, voter_ip=None):
 
 @app.route('/api/complaints', methods=['GET'])
 def get_complaints():
-    status = request.args.get('status')
+    status   = request.args.get('status')
     voter_id = get_voter_id()
-    q      = Complaint.query
+    q        = Complaint.query
     if status and status != 'all':
         q = q.filter_by(status=status)
     complaints = q.order_by(Complaint.votes.desc()).all()
@@ -127,7 +132,7 @@ def get_complaints():
 @app.route('/api/complaints/<int:cid>', methods=['GET'])
 def get_complaint(cid):
     voter_id = get_voter_id()
-    c  = db.session.get(Complaint, cid)
+    c        = db.session.get(Complaint, cid)
     if not c:
         return jsonify({'error': 'Complaint not found'}), 404
     return jsonify(complaint_to_dict(c, voter_id))
@@ -161,7 +166,7 @@ def create_complaint():
 @app.route('/api/complaints/<int:cid>/vote', methods=['POST'])
 def vote(cid):
     voter_id = get_voter_id()
-    c  = db.session.get(Complaint, cid)
+    c        = db.session.get(Complaint, cid)
     if not c:
         return jsonify({'error': 'Complaint not found'}), 404
 
@@ -231,20 +236,23 @@ def get_stats():
         'votes':    int(votes)
     })
 
-# ── Admin auth ────────────────────────────────────────────────────
+# ── User auth ─────────────────────────────────────────────────────
 
 @app.route('/api/user/login', methods=['POST'])
 def user_login():
     data    = request.get_json() or {}
     user_id = data.get('userId', '').strip()
-    
+
     if not user_id:
         return jsonify({'success': False, 'error': 'User ID is required'}), 400
-        
+
     if user_id in VALID_STUDENT_IDS:
         return jsonify({'success': True, 'userId': user_id})
-        
+
     return jsonify({'success': False, 'error': 'Invalid User ID'}), 401
+
+
+# ── Admin auth ────────────────────────────────────────────────────
 
 @app.route('/api/admin/login', methods=['POST'])
 def admin_login():
